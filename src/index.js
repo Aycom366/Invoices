@@ -2,7 +2,6 @@ import React from "react";
 import ReactDom from "react-dom";
 import App from "./App";
 import "./index.css";
-import "pretty-checkbox/dist/pretty-checkbox.css";
 
 //creating the database
 import { createStore } from "redux";
