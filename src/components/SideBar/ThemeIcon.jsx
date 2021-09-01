@@ -1,9 +1,8 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 function ThemeIcon() {
   const isBlack = useSelector((state) => state.theme.isDark);
-  const dispatch = useDispatch();
 
   console.log();
   return (
