@@ -1,13 +1,230 @@
-body {
+@import "./components/Header/Header.css";
+@import "./components/Invoice/Invoice.css";
+@import "./components/SideBar/Sidebar.css";
+@import "./components/New_Invoice/New_Invoice.css";
+
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Spartan", sans-serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.default {
+  --button-purple: #7c5dfa;
+  --button-hover: #9277ff;
+  --buttonBlack: #373b53;
+  --buttonBlackHover: #0c0e16;
+  --buttonRed: #ec5757;
+  --buttonRedHover: #ff9797;
+  --borderRadius: 24px;
+  --transition: all 0.3s ease-in-out;
+  background: var(--background);
+  color: var(--fontColorOpacity);
+  transition: var(--transition);
+}
+
+/* as a light theme, 
+am expecting the background to be white while other fonts are black.
+*/
+.light {
+  --background: #f2f2f2;
+  --fontColorOpacity: #0c0e16;
+  --fontColor: #7e88c3;
+  --gridBackground: #ffffff;
+  --sideBar: #373b53;
+  --lightGray: #f9fafe;
+  --lightGrayHover: #dfe3fa;
+  --buttonDefault: #f9fafe;
+  --buttonDefaultHover: #dfe3fa;
+  --amountDueBackground: #373b53;
+  --invoice: #ffffff;
+}
+
+.dark {
+  --background: #141625;
+  --fontColorOpacity: #fff;
+  --fontColor: #dfe3fa;
+  --gridBackground: #1e2139;
+  --sideBar: #1e2139;
+  --lightGray: #252945;
+  --lightGrayHover: #fff;
+  --buttonDefault: #252945;
+  --buttonDefaultHover: #ffffff;
+  --amountDueBackground: #0c0e16;
+  --invoice: #141625;
+}
+h1 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 36px;
+  letter-spacing: -1px;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 22px;
+  letter-spacing: -0.625px;
+}
+
+h3 {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: -0.8px;
+}
+
+h4 {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+}
+
+p {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: var(--fontColor);
+}
+
+.btn {
+  border-radius: var(--borderRadius);
+  overflow: hidden;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.btn-white {
+  background: var(--buttonDefault);
+}
+
+.btn-white:hover {
+  background: var(--buttonDefaultHover);
+}
+
+.btn-purple {
+  background-color: var(--button-purple);
+}
+
+.btn-purple:hover {
+  background-color: var(--button-hover);
+}
+
+.btn-red {
+  background-color: var(--buttonRed);
+}
+
+.btn-red:hover {
+  background-color: var(--buttonRedHover);
+}
+
+.paid {
+  z-index: 1;
+  background: #33d69f;
+}
+
+.paid::after,
+.pending::after,
+.draft::after {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  content: "";
+  top: 0;
+  left: 0;
+  opacity: 0.5;
+  z-index: -1;
+}
+
+.pending {
+  background: #ff8f00;
+  z-index: 1;
+}
+
+.main {
+  width: 100%;
+  height: 100%;
+}
+
+.main-app-container {
+  display: flex;
+  position: relative;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.info-wrapper {
+  flex-basis: 95%;
+  width: 100%;
+  position: relative;
+  background-color: var(--background);
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: -1000%;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  opacity: 0.5;
+  visibility: hidden;
+  transition: 0.3s ease-in-out;
+  z-index: 99;
+}
+
+.overlay-show {
+  left: 0;
+  visibility: visible;
+  transition: 0.3s ease-in-out;
+}
+
+.invoice-wrapper {
+  height: 100vh;
+  width: 100%;
+  max-width: 504px;
+  background-color: var(--invoice);
+  position: absolute;
+  z-index: 999;
+
+  left: -1000%;
+  top: 0;
+  visibility: hidden;
+  transition: 0.3s ease-in-out;
+}
+
+.invoice-wrapper-show {
+  left: 0;
+  visibility: visible;
+  transition: 0.3s ease-in-out;
+}
+
+.invoice-info-container {
+  max-width: 730px;
+  margin: 72px auto;
+  padding: 0 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .main-app-container {
+    flex-direction: column;
+  }
+  .invoice-info-container {
+    padding: 0 48px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .invoice-info-container {
+    padding: 0 15px;
+  }
+  h1 {
+    font-size: 20px;
+    letter-spacing: -0.625px;
+  }
 }

@@ -1,0 +1,129 @@
+.sidebar {
+  height: 100vh;
+  width: 100%;
+  min-width: 103px;
+  flex-basis: 5%;
+  background-color: var(--sideBar);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 0px 20px 20px 0px;
+}
+
+.logo-container {
+  background-color: #7c5dfa;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0px 20px 20px 0px;
+  overflow: hidden;
+}
+
+.logo-container::after {
+  background-color: #9277ff;
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  z-index: -1;
+  border-radius: 20px 0px 0px 0px;
+}
+
+.logo-wrapper {
+  padding: 32px 0;
+  z-index: 11;
+}
+
+.btn-wrapper {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid #494e6e;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 20px;
+}
+.theme {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.side-img {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.person {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 24px 0;
+}
+
+.person-wrapper {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  margin: 10px 0;
+  overflow: hidden;
+}
+.person-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.theme svg path:hover {
+  fill: #dfe3fa;
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    flex-basis: 100%;
+    flex-direction: row;
+    max-width: 100% !important;
+    border-radius: 0px 0px 0px 0px;
+    height: 80px;
+  }
+  .logo-container {
+    width: 80px;
+  }
+  .side-img {
+    flex-direction: row;
+    width: 200px;
+    justify-content: space-between;
+  }
+  .btn-wrapper {
+    border: none;
+    padding: 0;
+  }
+  .logo-wrapper {
+    padding: 24px;
+  }
+  .person {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    border-left: 1px solid #494e6e;
+  }
+  .person-wrapper {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .side-img {
+    width: 120px;
+  }
+}
