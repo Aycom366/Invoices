@@ -190,7 +190,6 @@ p {
   background-color: var(--invoice);
   position: absolute;
   z-index: 999;
-
   left: -1000%;
   top: 0;
   visibility: hidden;
@@ -217,6 +216,12 @@ p {
     padding: 0 48px;
     width: 100%;
   }
+  .invoice-wrapper {
+    max-width: 100%;
+  }
+  .info-wrapper {
+    flex-basis: 100%;
+  }
 }
 
 @media screen and (max-width: 600px) {
@@ -226,5 +231,8 @@ p {
   h1 {
     font-size: 20px;
     letter-spacing: -0.625px;
+  }
+  .overlay-show {
+    display: none;
   }
 }
