@@ -5,7 +5,8 @@ import { useGlobalContext } from "../../context";
 import { DynamicInput } from "../../actions/invoiceAction";
 import { Formik, Form, Field, FieldArray } from "formik";
 import * as Yup from "yup";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 //formik functions
 const onSubmit = (values, submitProps) => {
   console.log("form data", values);
@@ -20,6 +21,8 @@ const validationSchema = () =>
       postCode: Yup.string().required("empty!"),
       country: Yup.string().required("empty!"),
     }),
+    createdAt: Yup.date().required("select a date").nullable(),
+    paymentTerms: Yup.string().required("select a plan"),
     clientAddress: Yup.object().shape({
       street: Yup.string().required("can't be empty!"),
       city: Yup.string().required("can't be empty!"),
@@ -42,7 +45,10 @@ function New_invoice() {
     clientName: "",
     clientEmail: "",
     description: "",
-    createdAt: "",
+    createdAt: null,
+    paymentDue: null,
+    status: "",
+    paymentTerms: "",
     id: getRandomAlphabet(),
     senderAddress: {
       street: "",
@@ -57,6 +63,7 @@ function New_invoice() {
       country: "",
     },
     items: [],
+    total: "",
   };
 
   return (
@@ -383,24 +390,73 @@ function New_invoice() {
                 {/* Date */}
                 <article className="date">
                   <div className="input-info">
-                    <label htmlFor="createdAt">Invoice Date</label>
-                    <div style={{ position: "relative", width: "100%" }}>
-                      <Field
-                        style={{ width: "100%", height: "100%" }}
-                        as="textarea"
-                        name="createdAt"
-                        id="createdAt"
-                      />
+                    <div className="label-info">
+                      <label
+                        className={
+                          touched.createdAt &&
+                          `${errors.createdAt && "label-red"}`
+                        }
+                        htmlFor="createdAt"
+                      >
+                        Invoice Date
+                      </label>
+                      {errors.createdAt && touched.createdAt ? (
+                        <p>{errors.createdAt}</p>
+                      ) : null}
                     </div>
+                    <Field
+                      className={
+                        touched.createdAt &&
+                        `${errors.createdAt ? "input-red" : "input"}`
+                      }
+                      name="createdAt"
+                    >
+                      {({ form, field }) => {
+                        //programticaly set values
+                        const { setFieldValue } = form;
+                        const { value } = field;
+                        return (
+                          <DatePicker
+                            placeholderText="click to select a date"
+                            className="picker"
+                            id="createdAt"
+                            selected={value}
+                            onChange={(val) => setFieldValue("createdAt", val)}
+                          />
+                        );
+                      }}
+                    </Field>
                   </div>
                   <div className="input-info">
-                    <label htmlFor="clientPost">Payment Terms</label>
-                    <select>
+                    <div className="label-info">
+                      <label
+                        className={
+                          touched.paymentTerms &&
+                          `${errors.paymentTerms && "label-red"}`
+                        }
+                        htmlFor="paymentTerms"
+                      >
+                        Payment Terms
+                      </label>
+                      {errors.paymentTerms && touched.paymentTerms ? (
+                        <p>{errors.paymentTerms}</p>
+                      ) : null}
+                    </div>
+                    <Field
+                      className={
+                        touched.paymentTerms &&
+                        `${errors.paymentTerms ? "input-red" : "input"}`
+                      }
+                      as="select"
+                      id="paymentTerms"
+                      name="paymentTerms"
+                    >
+                      <option value="" label="Select a plan" />
                       <option value="1">Net 1 Day</option>
                       <option value="7">Net 7 Day</option>
                       <option value="14">Net 14 Day</option>
                       <option value="30">Net 30 Day</option>
-                    </select>
+                    </Field>
                   </div>
                 </article>
                 {/* Services */}

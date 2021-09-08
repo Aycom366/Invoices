@@ -55,7 +55,7 @@
 }
 
 .label-red {
-  color: #ec5757;
+  color: #ec5757 !important;
 }
 
 .billDetails {
@@ -236,6 +236,10 @@ input::placeholder {
   line-height: 15px;
   letter-spacing: -0.2083333283662796px;
   color: #ec5757;
+}
+
+.picker {
+  width: 100% !important;
 }
 
 @media screen and (max-width: 600px) {

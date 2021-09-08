@@ -2,10 +2,7 @@ import React from "react";
 import ReactDom from "react-dom";
 import App from "./App";
 import "./index.css";
-<<<<<<< HEAD
 import { AppProvider } from "./context";
-=======
->>>>>>> 9656050ba252dbc24681b02d99365f808c078993
 
 //creating the database
 import { createStore } from "redux";
