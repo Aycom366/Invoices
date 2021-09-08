@@ -2,12 +2,17 @@ import React, { useEffect } from "react";
 import Sidebar from "./components/SideBar/Sidebar";
 import Header from "./components/Header/Header";
 import InvoiceList from "./components/Invoice/InvoiceList";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import New_invoice from "./components/New_Invoice/New_invoice";
 import Overlay from "./components/Overlay";
+import { showInvoice } from "./actions/headerAction";
+import { LoadInvoice } from "./actions/invoiceAction";
+import InvoiceDetail from "./components/InvoiceDetail/InvoiceDetail";
+import { useGlobalContext } from "./context";
 
 function App() {
   const isBlack = useSelector((state) => state.theme.isDark);
+  const { setisDraft } = useGlobalContext();
 
   //add the light class at default
   useEffect(() => {
@@ -21,27 +26,90 @@ function App() {
     }
   }, [isBlack]);
 
-  const Invoice = useSelector((state) => state.header.showInvoice);
+  const showInvoiceFilter = useSelector((state) => state.header.showInvoice);
+  const toggleInvoice = useSelector((state) => state.header.toggleInvoice);
+
+  const invoiceList = useSelector((state) => state.invoice);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(LoadInvoice(invoiceList.filterInvoice));
+  }, []);
 
   return (
     <main className="main">
       <section className="main-app-container">
         <Sidebar />
-        <div className="info-wrapper">
-          <Overlay />
-          <section
+        <div className="info-wrapper-container">
+          <div
             className={`${
-              Invoice
-                ? "invoice-wrapper invoice-wrapper-show"
-                : "invoice-wrapper"
+              showInvoiceFilter
+                ? "info-wrapper hide-info-wrapper"
+                : "info-wrapper"
             }`}
           >
-            <New_invoice />
-          </section>
-          <section className="invoice-info-container">
-            <Header />
-            <InvoiceList />
-          </section>
+            <Overlay />
+            <section
+              className={`${
+                showInvoiceFilter
+                  ? "invoice-wrapper invoice-wrapper-show"
+                  : "invoice-wrapper"
+              }`}
+            >
+              <New_invoice />
+              <section className="fixed">
+                <button
+                  onClick={() => dispatch(showInvoice())}
+                  type="reset"
+                  form="new-Invoice"
+                  className="btn single-btn"
+                >
+                  Discard
+                </button>
+                <section className="btn-contain">
+                  <button
+                    onClick={() => setisDraft(false)}
+                    type="submit"
+                    form="new-Invoice"
+                    className="btn-ash btn"
+                  >
+                    Save as Draft
+                  </button>
+                  <button
+                    onClick={() => setisDraft(true)}
+                    type="submit"
+                    form="new-Invoice"
+                    // disabled={formik.isSubmitting}
+                    className="btn-purple btn"
+                  >
+                    Save &amp; Send
+                  </button>
+                </section>
+              </section>
+            </section>
+            <section className="invoice-changer">
+              <div
+                className={`${
+                  toggleInvoice
+                    ? "invoice-info-container hide-invoice-info-container"
+                    : "invoice-info-container"
+                }`}
+              >
+                <Header />
+                <InvoiceList />
+              </div>
+              <div
+                className={`${
+                  toggleInvoice
+                    ? "invoice-info-container-detail show-invoice-detail"
+                    : "invoice-info-container-detail"
+                }`}
+              >
+                <InvoiceDetail />
+              </div>
+            </section>
+          </div>
         </div>
       </section>
     </main>

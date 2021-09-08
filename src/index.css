@@ -2,6 +2,8 @@
 @import "./components/Invoice/Invoice.css";
 @import "./components/SideBar/Sidebar.css";
 @import "./components/New_Invoice/New_Invoice.css";
+@import "./components/Invoice/Invoice.css";
+@import "./components/InvoiceDetail/InvoiceDetail.css";
 
 * {
   margin: 0;
@@ -42,6 +44,9 @@ am expecting the background to be white while other fonts are black.
   --inputColor: #0c0e16;
   --inputBackground: #fff;
   --inputBorder: #dfe3fa;
+  --scrollColor: #dfe3fa;
+  --draft: #373b53;
+  --invoiceItemParagraph: #7e88c3;
 }
 
 .dark {
@@ -59,6 +64,9 @@ am expecting the background to be white while other fonts are black.
   --inputColor: #ffffff;
   --inputBackground: #1e2139;
   --inputBorder: #1e2139;
+  --scrollColor: #252945;
+  --draft: #dfe3fa;
+  --invoiceItemParagraph: #dfe3fa;
 }
 
 h1 {
@@ -103,7 +111,13 @@ label {
   overflow: hidden;
   border: none;
   outline: none;
-  background-color: transparent;
+  padding: 17px 24px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  cursor: pointer;
+  transition: var(--transition);
 }
 
 .btn-white {
@@ -116,6 +130,7 @@ label {
 
 .btn-purple {
   background-color: var(--button-purple);
+  color: #fff;
 }
 
 .btn-purple:hover {
@@ -130,66 +145,44 @@ label {
   background-color: var(--buttonRedHover);
 }
 
-.paid {
-  z-index: 1;
-  background: #33d69f;
-}
-
-.paid::after,
-.pending::after,
-.draft::after {
-  position: absolute;
+.info-wrapper {
   width: 100%;
+  position: fixed;
+  background-color: var(--background);
+  overflow-y: auto !important;
   height: 100%;
-  content: "";
   top: 0;
   left: 0;
-  opacity: 0.5;
-  z-index: -1;
+  padding-left: 103px;
 }
 
-.pending {
-  background: #ff8f00;
-  z-index: 1;
+.hide-info-wrapper {
+  overflow: hidden !important;
 }
 
-.main {
+.info-wrapper-container {
   width: 100%;
-  height: 100%;
-}
-
-.main-app-container {
-  display: flex;
-  position: relative;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.info-wrapper {
   flex-basis: 95%;
-  width: 100%;
   position: relative;
-  background-color: var(--background);
-  overflow: hidden;
 }
 
 .overlay {
   position: absolute;
   top: 0;
-  left: -1000%;
+  left: 0;
   width: 100%;
   height: 100%;
   background-color: #000000;
   opacity: 0.5;
-  visibility: hidden;
-  transition: 0.3s ease-in-out;
+  display: none;
+  transition: var(--transition);
   z-index: 99;
 }
 
 .overlay-show {
-  left: 0;
+  display: block;
   visibility: visible;
-  transition: 0.3s ease-in-out;
+  transition: var(--transition);
 }
 
 .invoice-wrapper {
@@ -197,12 +190,12 @@ label {
   width: 100%;
   max-width: 616px;
   background-color: var(--invoice);
-  position: fixed;
+  position: absolute;
   z-index: 999;
-  left: -1000%;
+  left: -100%;
   top: 0;
   visibility: hidden;
-  transition: 0.3s ease-in-out;
+  transition: var(--transition);
   border-radius: 0px 20px 20px 0px;
   overflow-y: auto !important;
 }
@@ -210,45 +203,123 @@ label {
 .invoice-wrapper-show {
   left: 103px;
   visibility: visible;
-  transition: 0.3s ease-in-out;
-  overflow-y: visible;
+  transition: var(--transition);
+}
+.fixed {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: 616px;
+  background-color: var(--inputBackground);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 110px;
+  padding: 0 56px;
+  border-radius: 0px 20px 20px 0px;
+}
+
+.single-btn {
+  background: #f9fafe;
+  color: #7e88c3;
+}
+
+.btn-ash {
+  background: #373b53;
+  color: #888eb0;
+}
+
+.btn-ash:hover {
+  background: #0c0e16;
+  color: #dfe3fa;
+}
+
+.btn-contain button:nth-child(2) {
+  margin-left: 8px;
+}
+
+.invoice-info-container,
+.invoice-info-container-detail {
+  width: 100%;
 }
 
 .invoice-info-container {
+  height: 100%;
+  transform: translateX(0);
+  transition: 0.5s ease-in-out;
+  visibility: visible;
+}
+
+.hide-invoice-info-container {
+  visibility: hidden;
+  height: 0;
+  transform: translateX(-100%);
+  transition: var(--transition);
+}
+
+.invoice-info-container-detail {
+  height: 0;
+  visibility: hidden;
+  transform: translateX(100%);
+  transition: var(--transition);
+}
+
+.show-invoice-detail {
+  height: 100%;
+  visibility: visible;
+  transform: translateX(0);
+  transition: var(--transition);
+}
+
+.invoice-changer {
+  width: 100%;
   max-width: 730px;
   margin: 72px auto;
   padding: 0 20px;
+  position: relative;
+  overflow: hidden;
 }
 
 /* scrollbar */
 ::-webkit-scrollbar {
-  width: 0;
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollColor);
+  border-radius: 4px;
 }
 
 @media screen and (max-width: 768px) {
   .main-app-container {
     flex-direction: column;
   }
-  .invoice-info-container {
+  .invoice-changer {
     padding: 0 48px;
-    width: 100%;
+    width: auto;
   }
   .invoice-wrapper {
     max-width: 616px;
-    top: 0;
+    top: auto;
   }
-  .info-wrapper {
+  .info-wrapper-container {
     flex-basis: 100%;
     width: 100%;
   }
   .invoice-wrapper-show {
     left: 0;
-    top: auto;
+  }
+  .info-wrapper {
+    top: 10%;
+    padding-left: 0 !important;
   }
 }
 
 @media screen and (max-width: 600px) {
-  .invoice-info-container {
+  .invoice-changer {
     padding: 0 15px;
   }
   h1 {
@@ -257,5 +328,29 @@ label {
   }
   .overlay-show {
     display: none;
+  }
+  .invoice-wrapper {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .fixed {
+    max-width: 100%;
+    padding: 0 24px;
+    height: 91px;
+    border-radius: 0 0 0 0;
+  }
+
+  .invoice-wrapper-show {
+    left: 0 !important;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .btn-ash,
+  .btn-purple,
+  .single-btn {
+    padding: 15px 10px;
   }
 }

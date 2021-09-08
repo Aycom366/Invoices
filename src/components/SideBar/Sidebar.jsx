@@ -10,9 +10,8 @@ function Sidebar() {
   const dispatch = useDispatch();
 
   const changeThemes = () => {
-    dispatch(changeTheme());
-    console.log(isBlack);
     //this will trigger the useEffect in App.js File
+    dispatch(changeTheme());
   };
 
   return (

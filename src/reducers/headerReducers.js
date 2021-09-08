@@ -3,6 +3,7 @@ import { ActionTypes } from "../constants/themeActionTypes";
 const initialState = {
   isFilter: false,
   showInvoice: false,
+  toggleInvoice: false,
 };
 
 export const headerReducer = (state = initialState, action) => {
@@ -14,5 +15,11 @@ export const headerReducer = (state = initialState, action) => {
     return { ...state, showInvoice: !state.showInvoice };
   }
 
+  if (action.type === ActionTypes.toggleInvoice) {
+    return {
+      ...state,
+      toggleInvoice: !state.toggleInvoice,
+    };
+  }
   return { ...state };
 };

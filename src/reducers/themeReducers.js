@@ -3,7 +3,6 @@ import { ActionTypes } from "../constants/themeActionTypes";
 //get last browser saved theme
 const getLocalStorage = () => {
   const isDark = localStorage.getItem("Theme");
-  console.log(JSON.parse(isDark));
   if (JSON.parse(isDark) === true) {
     return true;
   } else {

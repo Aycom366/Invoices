@@ -2,7 +2,7 @@ import React from "react";
 import ReactDom from "react-dom";
 import App from "./App";
 import "./index.css";
-import "pretty-checkbox/dist/pretty-checkbox.css";
+import { AppProvider } from "./context";
 
 //creating the database
 import { createStore } from "redux";
@@ -21,7 +21,9 @@ const store = createStore(
 ReactDom.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <AppProvider>
+        <App />
+      </AppProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import arrowDown from "../../assets/icon-arrow-down.svg";
-import arrowPlus from "../../assets/icon-plus.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { changeFilterVisibility } from "../../actions/headerAction";
 import { showInvoice } from "../../actions/headerAction";
 import CheckBox from "./CheckBox";
+import { AddCircle } from "@material-ui/icons";
 
 const getWindowWidth = () => {
   const { innerWidth: width } = window;
@@ -26,9 +26,14 @@ function Header() {
   const dispatch = useDispatch();
   const headerReducer = useSelector((state) => state.header);
 
+  //change filterby visibility
   const handleFilter = () => dispatch(changeFilterVisibility());
 
+  //filter showing of sidebar components or not
   const handleInvoice = () => dispatch(showInvoice());
+
+  //get the invoice list from the invoice reducer
+  const invoiceList = useSelector((state) => state.invoice);
 
   return (
     <main className="header">
@@ -38,11 +43,12 @@ function Header() {
         </h1>
         {getWidth <= 600 ? (
           <p>
-            <span>0 </span>invoices
+            <span>{invoiceList.filterInvoice.length}</span>invoices
           </p>
         ) : (
           <p>
-            There are <span>0</span> total invoices
+            There are <span>{invoiceList.filterInvoice.length}</span> total
+            invoices
           </p>
         )}
       </section>
@@ -68,7 +74,7 @@ function Header() {
         </section>
         <div onClick={handleInvoice} className="new-invoice-wrapper">
           <div className="img-wrapper">
-            <img aria-label="New Invoice" src={arrowPlus} alt="New-Invoice" />
+            <AddCircle style={{ width: "32px", height: "32px" }} />
           </div>
           <h4>{getWidth <= 600 ? "New" : "New Invoice"}</h4>
         </div>

@@ -1,11 +1,19 @@
 import React from "react";
+import { useGlobalContext } from "../../context";
 
 function CheckBox() {
+  const { onChange, check } = useGlobalContext();
   return (
     <>
       <label className="checkbox">
         <span className="checkbox__input">
-          <input type="checkbox" name="checkbox" />
+          <input
+            checked={check.draft}
+            onChange={(e) => onChange(e)}
+            type="checkbox"
+            name="draft"
+            value="draft"
+          />
           <span className="checkbox__control">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +34,13 @@ function CheckBox() {
       </label>
       <label className="checkbox">
         <span className="checkbox__input">
-          <input type="checkbox" name="checkbox" />
+          <input
+            checked={check.pend}
+            onChange={(e) => onChange(e)}
+            type="checkbox"
+            name="pend"
+            value="pending"
+          />
           <span className="checkbox__control">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +61,13 @@ function CheckBox() {
       </label>
       <label className="checkbox">
         <span className="checkbox__input">
-          <input type="checkbox" name="checkbox" />
+          <input
+            checked={check.paid}
+            onChange={(e) => onChange(e)}
+            type="checkbox"
+            name="paid"
+            value="paid"
+          />
           <span className="checkbox__control">
             <svg
               xmlns="http://www.w3.org/2000/svg"

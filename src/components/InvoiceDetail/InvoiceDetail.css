@@ -1,0 +1,20 @@
+.classDetails {
+  display: grid;
+  grid-row-gap: 2rem;
+}
+
+.singleback button {
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  color: var(--fontColorOpacity);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+}
+
+.single-header {
+  display: flex;
+}
