@@ -59,23 +59,12 @@ export const AppProvider = ({ children }) => {
     dispatch(FilterInvoice(tempInvoice));
   };
 
-  function getRandomAlphabet() {
-    let text = "";
-    let fourRandom;
-    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    for (let i = 0; i < 2; i++)
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-    fourRandom = Math.floor(Math.random() * 10000) + 1000;
-    return text + fourRandom;
-  }
-
   return (
     <AppContext.Provider
       value={{
         onChange,
         handleCheckBoxChanges,
         getWidth,
-        getRandomAlphabet,
         check,
         isDraft,
         setisDraft,

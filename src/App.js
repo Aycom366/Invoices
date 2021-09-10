@@ -80,7 +80,6 @@ function App() {
                     onClick={() => setisDraft(true)}
                     type="submit"
                     form="new-Invoice"
-                    // disabled={formik.isSubmitting}
                     className="btn-purple btn"
                   >
                     Save &amp; Send
@@ -96,8 +95,12 @@ function App() {
                     : "invoice-info-container"
                 }`}
               >
-                <Header />
-                <InvoiceList />
+                <div className="headerCon">
+                  <Header />
+                </div>
+                <div className="invoiceListWrapper">
+                  <InvoiceList />
+                </div>
               </div>
               <div
                 className={`${

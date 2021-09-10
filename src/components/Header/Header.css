@@ -3,12 +3,14 @@
   width: 100%;
   justify-content: space-between;
   align-items: center;
+  overflow: hidden !important;
+  height: 100%;
 }
-
 .new-invoice {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  height: 100%;
   align-items: center;
 }
 
@@ -78,7 +80,7 @@
 .filter-items {
   position: absolute;
   width: 160px;
-  height: 128px;
+  height: 110px;
   background: black;
   top: -1000%;
   visibility: hidden;
@@ -97,7 +99,7 @@
 
 .show-filter {
   visibility: visible;
-  top: 100%;
+  top: 20%;
   transition: 0.3s ease-in-out;
 }
 

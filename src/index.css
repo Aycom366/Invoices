@@ -23,7 +23,6 @@
   --transition: all 0.3s ease-in-out;
   background: var(--background);
   color: var(--fontColorOpacity);
-  transition: var(--transition);
 }
 
 /* as a light theme, 
@@ -244,6 +243,30 @@ label {
 }
 
 .invoice-info-container {
+  position: fixed;
+  width: 100%;
+  max-width: 700px;
+  height: 100%;
+  top: 0;
+  bottom: 5%;
+}
+.invoiceListWrapper {
+  margin-top: 150px;
+  margin-bottom: 20px;
+  overflow-y: auto !important;
+  max-height: 80%;
+  z-index: 9;
+}
+
+.headerCon {
+  position: fixed;
+  width: 100%;
+  height: 150px;
+  top: 0;
+  z-index: 999;
+}
+
+.invoice-info-container {
   height: 100%;
   transform: translateX(0);
   transition: 0.5s ease-in-out;
@@ -253,22 +276,22 @@ label {
 .hide-invoice-info-container {
   visibility: hidden;
   height: 0;
-  transform: translateX(-100%);
-  transition: var(--transition);
+  transform: translateX(-1000%);
+  transition: 0.5s ease-in-out;
 }
 
 .invoice-info-container-detail {
   height: 0;
   visibility: hidden;
-  transform: translateX(100%);
-  transition: var(--transition);
+  transform: translateX(1000%);
+  transition: 0.5s ease-in-out;
 }
 
 .show-invoice-detail {
   height: 100%;
   visibility: visible;
   transform: translateX(0);
-  transition: var(--transition);
+  transition: 0.5s ease-in-out;
 }
 
 .invoice-changer {
@@ -293,6 +316,15 @@ label {
   border-radius: 4px;
 }
 
+@media screen and (max-width: 850px) {
+  .invoice-info-container {
+    max-width: 616px;
+    width: 100%;
+    left: 55%;
+    transform: translate(-50%);
+  }
+}
+
 @media screen and (max-width: 768px) {
   .main-app-container {
     flex-direction: column;
@@ -315,6 +347,19 @@ label {
   .info-wrapper {
     top: 10%;
     padding-left: 0 !important;
+  }
+  .headerCon {
+    width: 100%;
+    left: 50%;
+    transform: translate(-50%);
+    padding: 0 20px;
+  }
+  .invoice-info-container {
+    left: 50%;
+    transform: translate(-50%);
+    width: 100%;
+    top: 10%;
+    padding: 0 20px;
   }
 }
 
@@ -347,10 +392,20 @@ label {
   }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 450px) {
   .btn-ash,
   .btn-purple,
   .single-btn {
     padding: 15px 10px;
+  }
+  /* scrollbar */
+  ::-webkit-scrollbar {
+    width: 0;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
   }
 }

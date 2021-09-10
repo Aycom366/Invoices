@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Add, Delete, FormatLineSpacing } from "@material-ui/icons";
 import { useGlobalContext } from "../../context";
 import { DynamicInput } from "../../actions/invoiceAction";
-import { Formik, Form, Field, FieldArray } from "formik";
+import {
+  Formik,
+  Form,
+  Field,
+  FieldArray,
+  ErrorMessage,
+  useFormikContext,
+  useField,
+} from "formik";
 import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-//formik functions
-const onSubmit = (values, submitProps) => {
-  console.log("form data", values);
-};
 
 //a validation schemal object
 const validationSchema = () =>
@@ -29,6 +33,13 @@ const validationSchema = () =>
       postCode: Yup.string().required("empty!"),
       country: Yup.string().required("empty!"),
     }),
+    items: Yup.array().of(
+      Yup.object().shape({
+        itemName: Yup.string().required(""),
+        itemQty: Yup.string().required(""),
+        itemPrice: Yup.string().required("Error"),
+      })
+    ),
     clientName: Yup.string().required("can't be empty!"),
     clientEmail: Yup.string()
       .email("Invalid email address!")
@@ -37,7 +48,7 @@ const validationSchema = () =>
   });
 
 function New_invoice() {
-  const { getRandomAlphabet, getWidth, isDraft } = useGlobalContext();
+  const { getWidth, isDraft } = useGlobalContext();
   const inputField = useSelector((state) => state.invoice.FormsValue);
   const dispatch = useDispatch();
 
@@ -45,11 +56,11 @@ function New_invoice() {
     clientName: "",
     clientEmail: "",
     description: "",
-    createdAt: null,
-    paymentDue: null,
+    createdAt: "",
+    paymentDue: "",
     status: "",
     paymentTerms: "",
-    id: getRandomAlphabet(),
+    id: "",
     senderAddress: {
       street: "",
       city: "",
@@ -64,6 +75,11 @@ function New_invoice() {
     },
     items: [],
     total: "",
+  };
+
+  const onSubmit = (values, submitProps) => {
+    dispatch(DynamicInput(values, isDraft));
+    submitProps.resetForm({ values: "" });
   };
 
   return (
@@ -81,7 +97,7 @@ function New_invoice() {
           //the onblur validations runs when an input is beeing focused and then the tab index changes
           //validateOnBlur={false}
         >
-          {({ errors, touched, isSubmitting, isValidating }) => (
+          {({ errors, touched, values, handleChange, setFieldValue }) => (
             <Form id="new-Invoice" className="form-invoice">
               <section className="bill-container ">
                 <article className=" billItems ">
@@ -137,6 +153,7 @@ function New_invoice() {
                       ) : null}
                     </div>
                     <Field
+                      autoComplete="off"
                       className={
                         touched.senderAddress?.city &&
                         `${errors.senderAddress?.city ? "input-red" : "input"}`
@@ -527,20 +544,45 @@ function New_invoice() {
                               <div className="label">
                                 {getWidth <= 600 && <p>Qty.</p>}
                                 <Field
-                                  type="text"
+                                  index={index}
+                                  type="number"
                                   name={`items[${index}].itemQty`}
+                                  onChange={(e) => {
+                                    handleChange(e);
+                                    const total = values.items[index].itemPrice
+                                      ? e.target.value *
+                                        values.items[index].itemPrice
+                                      : 0;
+                                    setFieldValue(
+                                      `items[${index}].itemTotal`,
+                                      total
+                                    );
+                                  }}
                                 />
                               </div>
                               <div className="label">
                                 {getWidth <= 600 && <p>Price</p>}
                                 <Field
-                                  type="text"
+                                  index={index}
+                                  type="number"
                                   name={`items[${index}].itemPrice`}
+                                  onChange={(e) => {
+                                    handleChange(e);
+                                    const total = values.items[index].itemQty
+                                      ? e.target.value *
+                                        values.items[index].itemQty
+                                      : 0;
+                                    setFieldValue(
+                                      `items[${index}].itemTotal`,
+                                      total
+                                    );
+                                  }}
                                 />
                               </div>
                               <div className=" label ">
                                 {getWidth <= 600 && <p>Total</p>}
                                 <Field
+                                  index={index}
                                   disabled
                                   style={{ color: "#888eb0" }}
                                   type="text"
@@ -564,7 +606,7 @@ function New_invoice() {
                             itemName: "",
                             itemQty: "",
                             itemPrice: "",
-                            itemTotal: 0,
+                            itemTotal: "",
                           })
                         }
                         type="button"
@@ -577,7 +619,9 @@ function New_invoice() {
                       {/* error fields */}
                       <section className="errors">
                         <p>- All fields must be added</p>
-                        <p>- An item must be added</p>
+                        {touched.items && errors.items && (
+                          <p>- An item must be added</p>
+                        )}
                       </section>
                     </>
                   )}

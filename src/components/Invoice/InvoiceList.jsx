@@ -4,11 +4,13 @@ import PersonHere from "../../assets/illustration-empty.svg";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import { useSelector, useDispatch } from "react-redux";
 import { ToggleInvoice } from "../../actions/headerAction";
+import { useGlobalContext } from "../../context";
 
 function InvoiceList() {
   const invoiceList = useSelector((state) => state.invoice);
   const toggleState = useSelector((state) => state.header.toggleInvoice);
   const dispatch = useDispatch();
+  const { getWidth } = useGlobalContext();
 
   return (
     <main className="invoiceList">
@@ -33,30 +35,66 @@ function InvoiceList() {
                 <article
                   onClick={() => dispatch(ToggleInvoice(id))}
                   key={id}
-                  className="invoiceItem"
+                  className={`${
+                    getWidth > 600 ? "invoiceItem" : "small-invoiceItem"
+                  }`}
                 >
-                  <div className="item id">
-                    <h4>
-                      <span>#</span>
-                      {id}
-                    </h4>
-                  </div>
-                  <div className="item paymentDue">
-                    <p>Due {paymentDue}</p>
-                  </div>
-                  <div className="item clientName">
-                    <p>{clientName}</p>
-                  </div>
-                  <div className="item total">
-                    <h3>${total}</h3>
-                  </div>
-                  <div className={status}>
-                    <FiberManualRecordIcon className="icon-invoice" />
-                    <h4>{status}</h4>
-                  </div>
-                  <div className="item img">
-                    <img src={ArrowRight} alt="Arrow-Right" />
-                  </div>
+                  {getWidth > 600 ? (
+                    <>
+                      <div className="item id">
+                        <h4>
+                          <span style={{ color: "#7E88C3" }}>#</span>
+                          {id}
+                        </h4>
+                      </div>
+                      <div className="item paymentDue">
+                        <p>Due {paymentDue}</p>
+                      </div>
+                      <div className="item clientName">
+                        <p>{clientName}</p>
+                      </div>
+                      <div className="item total">
+                        <h3>${total}</h3>
+                      </div>
+                      <div className={status}>
+                        <FiberManualRecordIcon className="icon-invoice" />
+                        <h4>{status}</h4>
+                      </div>
+                      <div className="item img">
+                        <img src={ArrowRight} alt="Arrow-Right" />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="small-item-info">
+                        <div>
+                          <h4>
+                            <span style={{ color: "#7E88C3" }}>#</span>
+                            {id}
+                          </h4>
+                        </div>
+                        <div>
+                          <p>{clientName}</p>
+                        </div>
+                      </div>
+                      <div className="small-item-date-info">
+                        <div className="small-item-date-wrapper">
+                          <div className=" smallpaymentDue">
+                            <p style={{ marginBottom: "8px" }}>
+                              Due {paymentDue}
+                            </p>
+                            <div className=" total">
+                              <h3>${total}</h3>
+                            </div>
+                          </div>
+                        </div>
+                        <div className={`${status} `}>
+                          <FiberManualRecordIcon className="icon-invoice" />
+                          <h4>{status}</h4>
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </article>
               );
             })}

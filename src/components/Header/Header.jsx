@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import arrowDown from "../../assets/icon-arrow-down.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { changeFilterVisibility } from "../../actions/headerAction";
-import { showInvoice } from "../../actions/headerAction";
+import { showInvoice, HideFilter } from "../../actions/headerAction";
 import CheckBox from "./CheckBox";
 import { AddCircle } from "@material-ui/icons";
 
@@ -32,12 +32,18 @@ function Header() {
   //filter showing of sidebar components or not
   const handleInvoice = () => dispatch(showInvoice());
 
+  const handleFil = () => {
+    if (headerReducer.isFilter === true) {
+      dispatch(HideFilter());
+    }
+  };
+
   //get the invoice list from the invoice reducer
   const invoiceList = useSelector((state) => state.invoice);
 
   return (
     <main className="header">
-      <section className="invoiceHeader">
+      <section onClick={handleFil} className="invoiceHeader">
         <h1 style={{ marginBottom: `${getWidth <= 600 ? "4px" : "8px"}` }}>
           Invoices
         </h1>

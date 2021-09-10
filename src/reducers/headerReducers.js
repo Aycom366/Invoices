@@ -15,6 +15,10 @@ export const headerReducer = (state = initialState, action) => {
     return { ...state, showInvoice: !state.showInvoice };
   }
 
+  if (action.type === ActionTypes.hideFilter) {
+    return { ...state, isFilter: false };
+  }
+
   if (action.type === ActionTypes.toggleInvoice) {
     return {
       ...state,

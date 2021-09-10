@@ -6,4 +6,5 @@ export const ActionTypes = {
   FilterInvoice: "Filter_Invoice",
   DynamicInput: "Dynamic_Input",
   toggleInvoice: "Toggle_Invoices",
+  hideFilter: "HideFilter",
 };
