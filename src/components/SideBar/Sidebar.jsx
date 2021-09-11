@@ -4,9 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { changeTheme } from "../../actions/themeAction";
 import ThemeIcon from "./ThemeIcon";
 import personAvatar from "../../assets/image-avatar.jpg";
+import { useGlobalContext } from "../../context";
 
 function Sidebar() {
   const isBlack = useSelector((state) => state.theme.isDark);
+  const { handleFil } = useGlobalContext();
   const dispatch = useDispatch();
 
   const changeThemes = () => {
@@ -15,7 +17,7 @@ function Sidebar() {
   };
 
   return (
-    <section className="sidebar">
+    <section onClick={handleFil} className="sidebar">
       <div className="logo-container">
         <div className="logo-wrapper">
           <img src={logoSvg} alt="Invoice App" />

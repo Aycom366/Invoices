@@ -46,6 +46,7 @@ am expecting the background to be white while other fonts are black.
   --scrollColor: #dfe3fa;
   --draft: #373b53;
   --invoiceItemParagraph: #7e88c3;
+  --amountTotal: #373b53;
 }
 
 .dark {
@@ -66,6 +67,7 @@ am expecting the background to be white while other fonts are black.
   --scrollColor: #252945;
   --draft: #dfe3fa;
   --invoiceItemParagraph: #dfe3fa;
+  --amountTotal: #0c0e16;
 }
 
 h1 {
@@ -117,31 +119,59 @@ label {
   letter-spacing: -0.25px;
   cursor: pointer;
   transition: var(--transition);
+  background-color: transparent;
 }
 
 .btn-white {
   background: var(--buttonDefault);
+  cursor: pointer;
+  transition: var(--transition);
 }
 
 .btn-white:hover {
   background: var(--buttonDefaultHover);
+  transition: var(--transition);
 }
 
 .btn-purple {
   background-color: var(--button-purple);
   color: #fff;
+  cursor: pointer;
+  transition: var(--transition);
 }
 
 .btn-purple:hover {
   background-color: var(--button-hover);
+  cursor: pointer;
+  transition: var(--transition);
 }
 
 .btn-red {
   background-color: var(--buttonRed);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-black {
+  background-color: #252945;
+  cursor: pointer;
+  transition: var(--transition);
 }
 
 .btn-red:hover {
   background-color: var(--buttonRedHover);
+}
+
+.singleback button {
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  color: var(--fontColorOpacity);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: -0.25px;
 }
 
 .info-wrapper {
@@ -178,10 +208,71 @@ label {
   z-index: 99;
 }
 
+.deleteOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #000000;
+  opacity: 0.5;
+  transition: var(--transition);
+  z-index: -1;
+  transform: scale(0);
+  visibility: hidden;
+}
+
+.showdeleteOverlay {
+  visibility: visible;
+  transform: scale(1);
+  transition: var(--transition);
+  z-index: 999;
+}
+
 .overlay-show {
   display: block;
   visibility: visible;
   transition: var(--transition);
+}
+.modalDelete {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 480px;
+  width: 100%;
+  visibility: hidden;
+  transition: var(--transition);
+}
+
+.modalWrapper {
+  padding: 48px;
+  background: var(--inputBackground);
+  box-shadow: 0px 10px 10px -10px rgba(72, 84, 159, 0.100397);
+  display: grid;
+  grid-row-gap: 1rem;
+  border-radius: 8px;
+}
+
+.showModalDelete {
+  visibility: visible;
+  z-index: 99999999;
+  transition: var(--transition);
+  margin: 0;
+}
+.btnCon {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btnCon-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 0.5rem;
+}
+
+.btnCon-wrapper .btn-black {
+  background-color: var(--lightGray) !important;
 }
 
 .invoice-wrapper {
@@ -269,7 +360,7 @@ label {
 .invoice-info-container {
   height: 100%;
   transform: translateX(0);
-  transition: 0.5s ease-in-out;
+  transition: 1s ease-in-out;
   visibility: visible;
 }
 
@@ -277,21 +368,21 @@ label {
   visibility: hidden;
   height: 0;
   transform: translateX(-1000%);
-  transition: 0.5s ease-in-out;
+  transition: 1s ease-in-out;
 }
 
 .invoice-info-container-detail {
   height: 0;
   visibility: hidden;
   transform: translateX(1000%);
-  transition: 0.5s ease-in-out;
+  transition: 1s ease-in-out;
 }
 
 .show-invoice-detail {
   height: 100%;
   visibility: visible;
   transform: translateX(0);
-  transition: 0.5s ease-in-out;
+  transition: 1s ease-in-out;
 }
 
 .invoice-changer {
@@ -364,9 +455,14 @@ label {
 }
 
 @media screen and (max-width: 600px) {
+  .modalWrapper {
+    margin: 0 15px;
+  }
   .invoice-changer {
     padding: 0 15px;
+    margin: 50px auto;
   }
+
   h1 {
     font-size: 20px;
     letter-spacing: -0.625px;
@@ -389,6 +485,13 @@ label {
   .invoice-wrapper-show {
     left: 0 !important;
     width: 100%;
+  }
+  .invoiceListWrapper {
+    margin-top: 100px;
+    max-height: 100%;
+  }
+  .headerCon {
+    height: 100px;
   }
 }
 

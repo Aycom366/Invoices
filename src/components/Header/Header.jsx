@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import arrowDown from "../../assets/icon-arrow-down.svg";
 import { useSelector, useDispatch } from "react-redux";
-import { changeFilterVisibility } from "../../actions/headerAction";
-import { showInvoice, HideFilter } from "../../actions/headerAction";
+import {
+  showInvoice,
+  changeFilterVisibility,
+} from "../../actions/headerAction";
 import CheckBox from "./CheckBox";
 import { AddCircle } from "@material-ui/icons";
+import { useGlobalContext } from "../../context";
 
 const getWindowWidth = () => {
   const { innerWidth: width } = window;
@@ -13,6 +16,7 @@ const getWindowWidth = () => {
 
 function Header() {
   const [getWidth, setGetWidth] = useState(getWindowWidth);
+  const { handleFil } = useGlobalContext();
 
   useEffect(() => {
     function handleResize() {
@@ -31,12 +35,6 @@ function Header() {
 
   //filter showing of sidebar components or not
   const handleInvoice = () => dispatch(showInvoice());
-
-  const handleFil = () => {
-    if (headerReducer.isFilter === true) {
-      dispatch(HideFilter());
-    }
-  };
 
   //get the invoice list from the invoice reducer
   const invoiceList = useSelector((state) => state.invoice);

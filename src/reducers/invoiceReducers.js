@@ -16,7 +16,7 @@ const initialState = {
   invoices: data,
   filterInvoice: data,
   toggleId: "",
-  singleInvoice: [],
+  singleInvoice: {},
 };
 
 function addDays(date, days) {
@@ -42,8 +42,8 @@ export const invoiceReducer = (state = initialState, action) => {
 
     //calculate totalValues
     const totalAmount = action.payload.items.reduce((acc, curr) => {
-      const { itemTotal } = curr;
-      acc += parseFloat(itemTotal);
+      const { total } = curr;
+      acc += parseFloat(total);
       return acc;
     }, 0);
 
@@ -99,16 +99,42 @@ export const invoiceReducer = (state = initialState, action) => {
     };
   }
 
+  //mark invoice paid
+  if (action.type === ActionTypes.markaspaid) {
+    const temp = state.invoices.map((x) =>
+      x.id === action.payload ? { ...x, status: "paid" } : x
+    );
+
+    let single = temp.find((sin) => sin.id === action.payload);
+
+    return {
+      ...state,
+      invoices: temp,
+      filterInvoice: temp,
+      singleInvoice: { ...single, status: "paid" },
+    };
+  }
+
+  //passing and getting object to single invoice information
   if (action.type === ActionTypes.toggleInvoice) {
-    const tempInvoice = state.filterInvoice.filter(
+    const tempInvoice = state.filterInvoice.find(
       (inv) => inv.id === action.payload
     );
+
     return {
       ...state,
       toggleInvoice: !state.toggleInvoice,
       toggleId: action.payload,
       singleInvoice: tempInvoice,
     };
+  }
+
+  //Deleting Invoice
+  if (action.type === ActionTypes.DeleteIinvoice) {
+    const id = action.payload;
+    let temp = state.invoices.filter((invoice) => invoice.id !== id);
+
+    return { ...state, invoices: temp, filterInvoice: temp, singleInvoice: {} };
   }
 
   return { ...state };

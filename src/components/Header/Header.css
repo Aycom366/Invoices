@@ -80,7 +80,6 @@
 .filter-items {
   position: absolute;
   width: 160px;
-  height: 110px;
   background: black;
   top: -1000%;
   visibility: hidden;
@@ -93,8 +92,9 @@
   display: grid;
   grid-template-columns: 1fr;
   place-content: center;
-  grid-row-gap: 1rem;
+  grid-row-gap: 0.5rem;
   z-index: 2;
+  padding: 10px;
 }
 
 .show-filter {

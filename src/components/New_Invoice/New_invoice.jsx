@@ -3,79 +3,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { Add, Delete, FormatLineSpacing } from "@material-ui/icons";
 import { useGlobalContext } from "../../context";
 import { DynamicInput } from "../../actions/invoiceAction";
-import {
-  Formik,
-  Form,
-  Field,
-  FieldArray,
-  ErrorMessage,
-  useFormikContext,
-  useField,
-} from "formik";
-import * as Yup from "yup";
+import validationSchema from "../ValidationSchema";
+import { initialValues } from "../ValidationSchema";
+import GoBack from "../GoBack";
+
+import { Formik, Form, Field, FieldArray } from "formik";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-//a validation schemal object
-const validationSchema = () =>
-  Yup.object().shape({
-    senderAddress: Yup.object().shape({
-      street: Yup.string().required("can't be empty!"),
-      city: Yup.string().required("can't be empty!"),
-      postCode: Yup.string().required("empty!"),
-      country: Yup.string().required("empty!"),
-    }),
-    createdAt: Yup.date().required("select a date").nullable(),
-    paymentTerms: Yup.string().required("select a plan"),
-    clientAddress: Yup.object().shape({
-      street: Yup.string().required("can't be empty!"),
-      city: Yup.string().required("can't be empty!"),
-      postCode: Yup.string().required("empty!"),
-      country: Yup.string().required("empty!"),
-    }),
-    items: Yup.array().of(
-      Yup.object().shape({
-        itemName: Yup.string().required(""),
-        itemQty: Yup.string().required(""),
-        itemPrice: Yup.string().required("Error"),
-      })
-    ),
-    clientName: Yup.string().required("can't be empty!"),
-    clientEmail: Yup.string()
-      .email("Invalid email address!")
-      .required("can't be empty"),
-    description: Yup.string().required("can't be empty!"),
-  });
+import { showInvoice } from "../../actions/headerAction";
 
 function New_invoice() {
   const { getWidth, isDraft } = useGlobalContext();
-  const inputField = useSelector((state) => state.invoice.FormsValue);
   const dispatch = useDispatch();
-
-  const initialValues = {
-    clientName: "",
-    clientEmail: "",
-    description: "",
-    createdAt: "",
-    paymentDue: "",
-    status: "",
-    paymentTerms: "",
-    id: "",
-    senderAddress: {
-      street: "",
-      city: "",
-      postCode: "",
-      country: "",
-    },
-    clientAddress: {
-      street: "",
-      city: "",
-      postCode: "",
-      country: "",
-    },
-    items: [],
-    total: "",
-  };
 
   const onSubmit = (values, submitProps) => {
     dispatch(DynamicInput(values, isDraft));
@@ -84,6 +23,11 @@ function New_invoice() {
 
   return (
     <main className="invoice">
+      {getWidth < 600 && (
+        <div className="gobackcontainer">
+          <GoBack showInvoice={showInvoice} />
+        </div>
+      )}
       <section className="invoice-container">
         <h1>New Invoice</h1>
         {/* Formik doings */}
@@ -537,7 +481,7 @@ function New_invoice() {
                               {getWidth <= 600 && <p>Item Name</p>}
                               <Field
                                 type="text"
-                                name={`items[${index}].itemName`}
+                                name={`items[${index}].name`}
                               />
                             </div>
                             <div className="label2">
@@ -546,15 +490,15 @@ function New_invoice() {
                                 <Field
                                   index={index}
                                   type="number"
-                                  name={`items[${index}].itemQty`}
+                                  name={`items[${index}].quantity`}
                                   onChange={(e) => {
                                     handleChange(e);
-                                    const total = values.items[index].itemPrice
+                                    const total = values.items[index].price
                                       ? e.target.value *
-                                        values.items[index].itemPrice
+                                        values.items[index].price
                                       : 0;
                                     setFieldValue(
-                                      `items[${index}].itemTotal`,
+                                      `items[${index}].total`,
                                       total
                                     );
                                   }}
@@ -565,15 +509,15 @@ function New_invoice() {
                                 <Field
                                   index={index}
                                   type="number"
-                                  name={`items[${index}].itemPrice`}
+                                  name={`items[${index}].price`}
                                   onChange={(e) => {
                                     handleChange(e);
-                                    const total = values.items[index].itemQty
+                                    const total = values.items[index].quantity
                                       ? e.target.value *
-                                        values.items[index].itemQty
+                                        values.items[index].quantity
                                       : 0;
                                     setFieldValue(
-                                      `items[${index}].itemTotal`,
+                                      `items[${index}].total`,
                                       total
                                     );
                                   }}
@@ -586,7 +530,7 @@ function New_invoice() {
                                   disabled
                                   style={{ color: "#888eb0" }}
                                   type="text"
-                                  name={`items[${index}].itemTotal`}
+                                  name={`items[${index}].total`}
                                 />
                               </div>
                               <button
@@ -603,10 +547,10 @@ function New_invoice() {
                       <button
                         onClick={() =>
                           push({
-                            itemName: "",
-                            itemQty: "",
-                            itemPrice: "",
-                            itemTotal: "",
+                            name: "",
+                            quantity: "",
+                            price: "",
+                            total: "",
                           })
                         }
                         type="button"

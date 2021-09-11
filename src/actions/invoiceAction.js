@@ -11,3 +11,11 @@ export const FilterInvoice = (invoice) => {
 export const DynamicInput = (values, Status) => {
   return { type: ActionTypes.DynamicInput, payload: values, isDraft: Status };
 };
+
+export const MarkAsPaid = (id) => {
+  return { type: ActionTypes.markaspaid, payload: id };
+};
+
+export const Delete = (id) => {
+  return { type: ActionTypes.DeleteIinvoice, payload: id };
+};

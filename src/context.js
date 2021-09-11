@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FilterInvoice } from "./actions/invoiceAction";
+import { HideFilter } from "./actions/headerAction";
+import { Delete } from "./actions/invoiceAction";
+import { ToggleInvoice } from "./actions/headerAction";
 
 const AppContext = React.createContext();
 
@@ -12,10 +15,31 @@ const getWindowInnerWidth = () => {
 
 export const AppProvider = ({ children }) => {
   const currentInvoice = useSelector((state) => state.invoice.invoices);
+  const headerReducer = useSelector((state) => state.header);
+
+  const [invoiceId, setInvoiceId] = useState({ id: "", isClicked: false });
+
   const dispatch = useDispatch();
 
   //getWindowWidth
   const [getWidth, setGetWidth] = useState(getWindowInnerWidth);
+
+  //showdeleModal
+  const [isDeleteModal, setIsDeleteModal] = useState({
+    id: "",
+    isVisible: false,
+  });
+
+  //function to hide back delete modal and overlay
+  const closeDeleteModal_Delete = () => {
+    setIsDeleteModal({ ...isDeleteModal, id: "", isVisible: false });
+  };
+
+  const DeleteInvoice = () => {
+    dispatch(ToggleInvoice(isDeleteModal.id));
+    dispatch(Delete(isDeleteModal.id));
+    closeDeleteModal_Delete();
+  };
 
   //saving as draft or not
   const [isDraft, setisDraft] = useState(false);
@@ -28,6 +52,13 @@ export const AppProvider = ({ children }) => {
 
   //checkbox objects
   const [check, setCheck] = useState({});
+
+  //closing Filter Modal
+  const handleFil = () => {
+    if (headerReducer.isFilter === true) {
+      dispatch(HideFilter());
+    }
+  };
 
   //Checkbox onchange functionalities
   const onChange = (e) => {
@@ -62,12 +93,19 @@ export const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
+        isDeleteModal,
+        setIsDeleteModal,
         onChange,
         handleCheckBoxChanges,
         getWidth,
         check,
         isDraft,
         setisDraft,
+        handleFil,
+        invoiceId,
+        setInvoiceId,
+        DeleteInvoice,
+        closeDeleteModal_Delete,
       }}
     >
       {children}

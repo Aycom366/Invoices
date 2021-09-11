@@ -9,10 +9,16 @@ import { showInvoice } from "./actions/headerAction";
 import { LoadInvoice } from "./actions/invoiceAction";
 import InvoiceDetail from "./components/InvoiceDetail/InvoiceDetail";
 import { useGlobalContext } from "./context";
+import DeleteOverlay from "./components/DeleteOverlay";
 
 function App() {
   const isBlack = useSelector((state) => state.theme.isDark);
-  const { setisDraft } = useGlobalContext();
+  const {
+    setisDraft,
+    isDeleteModal,
+    setIsDeleteModal,
+    closeDeleteModal_Delete,
+  } = useGlobalContext();
 
   //add the light class at default
   useEffect(() => {
@@ -41,6 +47,9 @@ function App() {
     <main className="main">
       <section className="main-app-container">
         <Sidebar />
+        <DeleteOverlay />
+
+        {/* Beginning of the main App */}
         <div className="info-wrapper-container">
           <div
             className={`${
@@ -50,6 +59,7 @@ function App() {
             }`}
           >
             <Overlay />
+
             <section
               className={`${
                 showInvoiceFilter
@@ -114,6 +124,7 @@ function App() {
             </section>
           </div>
         </div>
+        {/* End of main */}
       </section>
     </main>
   );

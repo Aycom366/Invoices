@@ -12,6 +12,11 @@
   justify-content: center;
 }
 
+.gobackcontainer {
+  padding: 0 24px;
+  margin-bottom: 24px;
+}
+
 .form-invoice {
   display: grid;
   grid-template-columns: 1fr;
@@ -256,6 +261,7 @@ input[type="number"] {
 @media screen and (max-width: 600px) {
   .invoice-container {
     padding: 0 24px !important;
+    grid-row-gap: 24px;
   }
   .billDetails {
     grid-template-columns: repeat(2, 1fr);

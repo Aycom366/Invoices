@@ -8,9 +8,8 @@ import { useGlobalContext } from "../../context";
 
 function InvoiceList() {
   const invoiceList = useSelector((state) => state.invoice);
-  const toggleState = useSelector((state) => state.header.toggleInvoice);
   const dispatch = useDispatch();
-  const { getWidth } = useGlobalContext();
+  const { getWidth, setInvoiceId, invoiceId } = useGlobalContext();
 
   return (
     <main className="invoiceList">
@@ -33,7 +32,9 @@ function InvoiceList() {
               const { id, paymentDue, clientName, total, status } = invoice;
               return (
                 <article
-                  onClick={() => dispatch(ToggleInvoice(id))}
+                  onClick={() => {
+                    dispatch(ToggleInvoice(id));
+                  }}
                   key={id}
                   className={`${
                     getWidth > 600 ? "invoiceItem" : "small-invoiceItem"
@@ -88,7 +89,7 @@ function InvoiceList() {
                             </div>
                           </div>
                         </div>
-                        <div className={`${status} `}>
+                        <div className={`${status}`}>
                           <FiberManualRecordIcon className="icon-invoice" />
                           <h4>{status}</h4>
                         </div>
