@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ToggleInvoice } from "../../actions/headerAction";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
@@ -8,7 +8,8 @@ import { useGlobalContext } from "../../context";
 import { MarkAsPaid } from "../../actions/invoiceAction";
 
 function InvoiceDetail() {
-  const { getWidth, isDeleteModal, setIsDeleteModal } = useGlobalContext();
+  const { getWidth, isDeleteModal, setIsDeleteModal, LoadEditValues } =
+    useGlobalContext();
   const dispatch = useDispatch();
   const invoice = useSelector((state) => state.invoice.singleInvoice);
 
@@ -45,7 +46,9 @@ function InvoiceDetail() {
               </div>
             </div>
             <div className="single-btns">
-              <button className="btns btn-black">Edit</button>
+              <button onClick={LoadEditValues} className="btns btn-black">
+                Edit
+              </button>
               <button onClick={handleDelete} className="btns btn-red">
                 Delete
               </button>

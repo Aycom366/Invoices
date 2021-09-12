@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FilterInvoice } from "./actions/invoiceAction";
-import { HideFilter } from "./actions/headerAction";
+import { HideFilter, showInvoice } from "./actions/headerAction";
 import { Delete } from "./actions/invoiceAction";
 import { ToggleInvoice } from "./actions/headerAction";
 
@@ -19,16 +19,36 @@ export const AppProvider = ({ children }) => {
 
   const [invoiceId, setInvoiceId] = useState({ id: "", isClicked: false });
 
+  const [isEdit, setIsEdit] = useState(false);
+
   const dispatch = useDispatch();
 
   //getWindowWidth
   const [getWidth, setGetWidth] = useState(getWindowInnerWidth);
+
+  //saving as draft or not
+  const [isDraft, setisDraft] = useState(false);
+
+  //checkbox objects
+  const [check, setCheck] = useState({});
+
+  //Formik InitialValues for editing
 
   //showdeleModal
   const [isDeleteModal, setIsDeleteModal] = useState({
     id: "",
     isVisible: false,
   });
+
+  //create LocalStorage
+  useEffect(() => {
+    localStorage.setItem("Invoices", JSON.stringify(currentInvoice));
+  }, [currentInvoice]);
+
+  const LoadEditValues = () => {
+    setIsEdit(true);
+    dispatch(showInvoice());
+  };
 
   //function to hide back delete modal and overlay
   const closeDeleteModal_Delete = () => {
@@ -41,17 +61,11 @@ export const AppProvider = ({ children }) => {
     closeDeleteModal_Delete();
   };
 
-  //saving as draft or not
-  const [isDraft, setisDraft] = useState(false);
-
   useEffect(() => {
     const handleResize = () => setGetWidth(getWindowInnerWidth());
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  //checkbox objects
-  const [check, setCheck] = useState({});
 
   //closing Filter Modal
   const handleFil = () => {
@@ -106,6 +120,9 @@ export const AppProvider = ({ children }) => {
         setInvoiceId,
         DeleteInvoice,
         closeDeleteModal_Delete,
+        LoadEditValues,
+        isEdit,
+        setIsEdit,
       }}
     >
       {children}

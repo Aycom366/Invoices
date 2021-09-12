@@ -153,12 +153,21 @@
   max-width: 110px;
 }
 
+@media screen and (max-width: 768px) {
+  .invoice-item-wrapper {
+    margin-bottom: 80px;
+  }
+}
+
 @media screen and (max-width: 600px) {
   .pending,
   .draft,
   .paid {
     max-width: 104px;
     margin-left: auto;
+  }
+  .invoice-item-wrapper {
+    margin-bottom: 200px;
   }
 }
 

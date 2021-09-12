@@ -9,4 +9,5 @@ export const ActionTypes = {
   hideFilter: "HideFilter",
   markaspaid: "MarkAsPaid",
   DeleteIinvoice: "Delete_Invoce",
+  EditIinvoice: "EditInvoice",
 };

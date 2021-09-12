@@ -45,15 +45,21 @@ function Header() {
         <h1 style={{ marginBottom: `${getWidth <= 600 ? "4px" : "8px"}` }}>
           Invoices
         </h1>
-        {getWidth <= 600 ? (
-          <p>
-            <span>{invoiceList.filterInvoice.length}</span>invoices
-          </p>
+        {invoiceList.filterInvoice.length > 0 ? (
+          <>
+            {getWidth <= 600 ? (
+              <p>
+                <span>{invoiceList.filterInvoice.length}</span>invoices
+              </p>
+            ) : (
+              <p>
+                There are <span>{invoiceList.filterInvoice.length}</span> total
+                invoices
+              </p>
+            )}
+          </>
         ) : (
-          <p>
-            There are <span>{invoiceList.filterInvoice.length}</span> total
-            invoices
-          </p>
+          <p>No Invoices</p>
         )}
       </section>
       <section className="invoice-events">

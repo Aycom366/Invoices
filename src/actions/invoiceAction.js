@@ -19,3 +19,7 @@ export const MarkAsPaid = (id) => {
 export const Delete = (id) => {
   return { type: ActionTypes.DeleteIinvoice, payload: id };
 };
+
+export const Edit = (values) => {
+  return { type: ActionTypes.EditIinvoice, payload: values };
+};

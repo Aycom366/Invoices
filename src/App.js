@@ -6,19 +6,13 @@ import { useSelector, useDispatch } from "react-redux";
 import New_invoice from "./components/New_Invoice/New_invoice";
 import Overlay from "./components/Overlay";
 import { showInvoice } from "./actions/headerAction";
-import { LoadInvoice } from "./actions/invoiceAction";
 import InvoiceDetail from "./components/InvoiceDetail/InvoiceDetail";
 import { useGlobalContext } from "./context";
 import DeleteOverlay from "./components/DeleteOverlay";
 
 function App() {
   const isBlack = useSelector((state) => state.theme.isDark);
-  const {
-    setisDraft,
-    isDeleteModal,
-    setIsDeleteModal,
-    closeDeleteModal_Delete,
-  } = useGlobalContext();
+  const { setisDraft, setIsEdit, isEdit } = useGlobalContext();
 
   //add the light class at default
   useEffect(() => {
@@ -35,13 +29,7 @@ function App() {
   const showInvoiceFilter = useSelector((state) => state.header.showInvoice);
   const toggleInvoice = useSelector((state) => state.header.toggleInvoice);
 
-  const invoiceList = useSelector((state) => state.invoice);
-
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(LoadInvoice(invoiceList.filterInvoice));
-  }, []);
 
   return (
     <main className="main">
@@ -68,33 +56,65 @@ function App() {
               }`}
             >
               <New_invoice />
-              <section className="fixed">
-                <button
-                  onClick={() => dispatch(showInvoice())}
-                  type="reset"
-                  form="new-Invoice"
-                  className="btn single-btn"
-                >
-                  Discard
-                </button>
-                <section className="btn-contain">
+              <section className={`${isEdit ? "fixed fixedEdit" : "fixed"}`}>
+                {!isEdit && (
                   <button
-                    onClick={() => setisDraft(false)}
-                    type="submit"
+                    onClick={() => {
+                      dispatch(showInvoice());
+                      setIsEdit(false);
+                    }}
+                    type="reset"
                     form="new-Invoice"
-                    className="btn-ash btn"
+                    className="btn single-btn"
                   >
-                    Save as Draft
+                    Discard
                   </button>
-                  <button
-                    onClick={() => setisDraft(true)}
-                    type="submit"
-                    form="new-Invoice"
-                    className="btn-purple btn"
-                  >
-                    Save &amp; Send
-                  </button>
-                </section>
+                )}
+
+                {isEdit ? (
+                  <>
+                    <section className="btn-contain">
+                      <button
+                        onClick={() => {
+                          dispatch(showInvoice());
+                          setIsEdit(false);
+                        }}
+                        type="button"
+                        className="btn-ash btn"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        form="new-Invoice"
+                        className="btn-purple btn"
+                      >
+                        Save Changes
+                      </button>
+                    </section>
+                  </>
+                ) : (
+                  <>
+                    <section className="btn-contain">
+                      <button
+                        onClick={() => setisDraft(false)}
+                        type="submit"
+                        form="new-Invoice"
+                        className="btn-ash btn"
+                      >
+                        Save as Draft
+                      </button>
+                      <button
+                        onClick={() => setisDraft(true)}
+                        type="submit"
+                        form="new-Invoice"
+                        className="btn-purple btn"
+                      >
+                        Save &amp; Send
+                      </button>
+                    </section>
+                  </>
+                )}
               </section>
             </section>
             <section className="invoice-changer">

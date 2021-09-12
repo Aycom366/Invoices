@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Add, Delete, FormatLineSpacing } from "@material-ui/icons";
+import { Add, Delete } from "@material-ui/icons";
 import { useGlobalContext } from "../../context";
 import { DynamicInput } from "../../actions/invoiceAction";
 import validationSchema from "../ValidationSchema";
@@ -11,13 +11,33 @@ import { Formik, Form, Field, FieldArray } from "formik";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { showInvoice } from "../../actions/headerAction";
+import { Edit } from "../../actions/invoiceAction";
 
 function New_invoice() {
-  const { getWidth, isDraft } = useGlobalContext();
+  const { getWidth, isDraft, isEdit, setIsEdit } = useGlobalContext();
+  const EditInvoiceDate = useSelector((state) => state.invoice.singleInvoice);
+
+  let savedValue = null;
+  if (isEdit) {
+    savedValue = {
+      ...EditInvoiceDate,
+      createdAt: new Date(EditInvoiceDate.createdAt),
+      paymentDue: new Date(EditInvoiceDate.paymentDue),
+    };
+  } else {
+    savedValue = null;
+  }
+
   const dispatch = useDispatch();
 
   const onSubmit = (values, submitProps) => {
-    dispatch(DynamicInput(values, isDraft));
+    if (isEdit) {
+      dispatch(Edit(values));
+      setIsEdit(false);
+      dispatch(showInvoice());
+    } else {
+      dispatch(DynamicInput(values, isDraft));
+    }
     submitProps.resetForm({ values: "" });
   };
 
@@ -29,12 +49,21 @@ function New_invoice() {
         </div>
       )}
       <section className="invoice-container">
-        <h1>New Invoice</h1>
+        {isEdit ? (
+          <h1>
+            Edit <span style={{ color: "#888EB0" }}>#</span>
+            {savedValue.id}
+          </h1>
+        ) : (
+          <h1>New Invoice</h1>
+        )}
+
         {/* Formik doings */}
         <Formik
           onSubmit={onSubmit}
-          initialValues={initialValues}
+          initialValues={savedValue || initialValues}
           validationSchema={isDraft && validationSchema}
+          enableReinitialize
 
           // this doesnt render validations when text is been typed as an input
           //validateOnChange={false}
@@ -86,7 +115,6 @@ function New_invoice() {
                           touched.senderAddress?.city &&
                           `${errors.senderAddress?.city && "label-red"}`
                         }
-                        htmlFor="senderAddress.street"
                         htmlFor="Sendercity"
                       >
                         City
@@ -271,8 +299,7 @@ function New_invoice() {
                           touched.clientAddress?.city &&
                           `${errors.clientAddress?.city && "label-red"}`
                         }
-                        htmlFor="clientAddress.street"
-                        htmlFor="Clientcity"
+                        htmlFor="clientAddress.city"
                       >
                         City
                       </label>
@@ -562,7 +589,6 @@ function New_invoice() {
 
                       {/* error fields */}
                       <section className="errors">
-                        <p>- All fields must be added</p>
                         {touched.items && errors.items && (
                           <p>- An item must be added</p>
                         )}

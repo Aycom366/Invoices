@@ -93,7 +93,7 @@
 .more-information {
   display: grid;
   width: 100%;
-  grid-template-columns: 1.5fr 1.5fr 2fr;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .single-item-info {

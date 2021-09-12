@@ -32,7 +32,7 @@ function DeleteOverlay() {
             <div className="btnCon-wrapper">
               <button
                 onClick={closeDeleteModal_Delete}
-                className="btn btn-black "
+                className="btn btn-black"
               >
                 Cancel
               </button>

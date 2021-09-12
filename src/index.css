@@ -149,13 +149,20 @@ label {
 .btn-red {
   background-color: var(--buttonRed);
   cursor: pointer;
+  color: #fff;
   transition: var(--transition);
 }
 
 .btn-black {
-  background-color: #252945;
+  background-color: var(--lightGray) !important ;
   cursor: pointer;
   transition: var(--transition);
+  color: var(--fontColor) !important;
+}
+
+.btn-black:hover {
+  color: #7e88c3 !important;
+  background-color: var(--lightGrayHover) !important;
 }
 
 .btn-red:hover {
@@ -273,6 +280,7 @@ label {
 
 .btnCon-wrapper .btn-black {
   background-color: var(--lightGray) !important;
+  color: var(--fontColor) !important;
 }
 
 .invoice-wrapper {
@@ -300,13 +308,16 @@ label {
   bottom: 0;
   width: 100%;
   max-width: 616px;
-  background-color: var(--inputBackground);
+  background-color: var(--background);
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 110px;
   padding: 0 56px;
-  border-radius: 0px 20px 20px 0px;
+}
+
+.fixedEdit {
+  justify-content: flex-end;
 }
 
 .single-btn {
@@ -458,6 +469,16 @@ label {
   .modalWrapper {
     margin: 0 15px;
   }
+  /* scrollbar */
+  ::-webkit-scrollbar {
+    width: 0;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
   .invoice-changer {
     padding: 0 15px;
     margin: 50px auto;
@@ -500,15 +521,5 @@ label {
   .btn-purple,
   .single-btn {
     padding: 15px 10px;
-  }
-  /* scrollbar */
-  ::-webkit-scrollbar {
-    width: 0;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: transparent;
   }
 }

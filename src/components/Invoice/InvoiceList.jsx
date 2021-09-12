@@ -9,7 +9,7 @@ import { useGlobalContext } from "../../context";
 function InvoiceList() {
   const invoiceList = useSelector((state) => state.invoice);
   const dispatch = useDispatch();
-  const { getWidth, setInvoiceId, invoiceId } = useGlobalContext();
+  const { getWidth } = useGlobalContext();
 
   return (
     <main className="invoiceList">

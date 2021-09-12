@@ -1,13 +1,12 @@
 import React from "react";
 import logoSvg from "../../assets/logo.svg";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { changeTheme } from "../../actions/themeAction";
 import ThemeIcon from "./ThemeIcon";
 import personAvatar from "../../assets/image-avatar.jpg";
 import { useGlobalContext } from "../../context";
 
 function Sidebar() {
-  const isBlack = useSelector((state) => state.theme.isDark);
   const { handleFil } = useGlobalContext();
   const dispatch = useDispatch();
 

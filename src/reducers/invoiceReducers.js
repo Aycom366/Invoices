@@ -1,6 +1,14 @@
 import { ActionTypes } from "../constants/themeActionTypes";
+const getLocalStorage = () => {
+  let cartList = localStorage.getItem("Invoices");
+  if (cartList) {
+    return JSON.parse(localStorage.getItem("Invoices"));
+  } else {
+    return [];
+  }
+};
 
-const data = require("../data.json");
+//const data = require("../data.json");
 
 function getRandomAlphabet() {
   let text = "";
@@ -13,8 +21,8 @@ function getRandomAlphabet() {
 }
 
 const initialState = {
-  invoices: data,
-  filterInvoice: data,
+  invoices: getLocalStorage(),
+  filterInvoice: getLocalStorage(),
   toggleId: "",
   singleInvoice: {},
 };
@@ -135,6 +143,35 @@ export const invoiceReducer = (state = initialState, action) => {
     let temp = state.invoices.filter((invoice) => invoice.id !== id);
 
     return { ...state, invoices: temp, filterInvoice: temp, singleInvoice: {} };
+  }
+
+  //Edit Invoice
+  if (action.type === ActionTypes.EditIinvoice) {
+    //calculate totalValues
+    const totalAmount = action.payload.items.reduce((acc, curr) => {
+      const { total } = curr;
+      acc += parseFloat(total);
+      return acc;
+    }, 0);
+
+    const a = {
+      ...action.payload,
+      createdAt: action.payload.createdAt.toLocaleDateString(),
+      paymentDue: addDays(
+        action.payload.createdAt.toLocaleDateString(),
+        action.payload.paymentTerms
+      ).toLocaleDateString(),
+      total: totalAmount,
+    };
+
+    let temp = state.invoices.map((inv) => {
+      if (inv.id === action.payload.id) {
+        inv = a;
+      }
+      return inv;
+    });
+
+    return { ...state, invoices: temp, filterInvoice: temp, singleInvoice: a };
   }
 
   return { ...state };
