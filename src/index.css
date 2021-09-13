@@ -371,7 +371,7 @@ label {
 .invoice-info-container {
   height: 100%;
   transform: translateX(0);
-  transition: 0.5s ease-in-out;
+  transition: 1s ease-in-out;
   visibility: visible;
 }
 
@@ -379,21 +379,21 @@ label {
   visibility: hidden;
   height: 0;
   transform: translateX(-1000%);
-  transition: 0.5s ease-in-out;
+  transition: 1s ease-in-out;
 }
 
 .invoice-info-container-detail {
   height: 0;
   visibility: hidden;
   transform: translateX(1000%);
-  transition: 0.5s ease-in-out;
+  transition: 1s ease-in-out;
 }
 
 .show-invoice-detail {
   height: 100%;
   visibility: visible;
   transform: translateX(0);
-  transition: 0.5s ease-in-out;
+  transition: 1s ease-in-out;
 }
 
 .invoice-changer {
