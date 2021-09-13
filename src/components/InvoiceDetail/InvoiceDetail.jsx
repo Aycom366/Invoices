@@ -176,12 +176,14 @@ function InvoiceDetail() {
             >
               Delete
             </button>
-            <button
-              onClick={() => markAsPaid(invoice.id)}
-              className="btns btn-purple"
-            >
-              Mark as Paid
-            </button>
+            {invoice.status !== "paid" && (
+              <button
+                onClick={() => markAsPaid(invoice.id)}
+                className="btns btn-purple"
+              >
+                Mark as Paid
+              </button>
+            )}
           </div>
         </>
       )}
