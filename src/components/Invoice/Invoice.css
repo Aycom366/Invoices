@@ -18,7 +18,6 @@
   width: 100%;
   max-width: 242px;
   margin: 0 auto;
-  margin-top: 141px;
 }
 
 .imageInvoice img {
@@ -168,6 +167,9 @@
   }
   .invoice-item-wrapper {
     margin-bottom: 200px;
+  }
+  .imageInvoice {
+    margin-top: 1rem;
   }
 }
 

@@ -19,11 +19,17 @@ function New_invoice() {
 
   let savedValue = null;
   if (isEdit) {
-    savedValue = {
-      ...EditInvoiceDate,
-      createdAt: new Date(EditInvoiceDate.createdAt),
-      paymentDue: new Date(EditInvoiceDate.paymentDue),
-    };
+    if (EditInvoiceDate.createdAt === "") {
+      savedValue = {
+        ...EditInvoiceDate,
+      };
+    } else {
+      savedValue = {
+        ...EditInvoiceDate,
+        createdAt: new Date(EditInvoiceDate.createdAt),
+        paymentDue: new Date(EditInvoiceDate.paymentDue),
+      };
+    }
   } else {
     savedValue = null;
   }

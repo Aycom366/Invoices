@@ -154,15 +154,24 @@ export const invoiceReducer = (state = initialState, action) => {
       return acc;
     }, 0);
 
-    const a = {
-      ...action.payload,
-      createdAt: action.payload.createdAt.toLocaleDateString(),
-      paymentDue: addDays(
-        action.payload.createdAt.toLocaleDateString(),
-        action.payload.paymentTerms
-      ).toLocaleDateString(),
-      total: totalAmount,
-    };
+    let a;
+
+    if (action.payload.createdAt !== "") {
+      a = {
+        ...action.payload,
+        createdAt: action.payload.createdAt.toLocaleDateString(),
+        paymentDue: addDays(
+          action.payload.createdAt.toLocaleDateString(),
+          action.payload.paymentTerms
+        ).toLocaleDateString(),
+        total: totalAmount,
+      };
+    } else {
+      a = {
+        ...action.payload,
+        total: totalAmount,
+      };
+    }
 
     let temp = state.invoices.map((inv) => {
       if (inv.id === action.payload.id) {
