@@ -22,11 +22,14 @@ function InvoiceDetail() {
   };
 
   return (
-    <main className="classDetails">
+    <div className="classDetails">
       {Object.keys(invoice).length > 0 && (
         <>
           <div className="singleback">
-            <button onClick={() => dispatch(ToggleInvoice(invoice.id))}>
+            <button
+              aria-label="Go Back Button to Invoice List Page"
+              onClick={() => dispatch(ToggleInvoice(invoice.id))}
+            >
               <span style={{ marginRight: "24px" }}>
                 <img
                   aria-label="go back arrow"
@@ -46,14 +49,23 @@ function InvoiceDetail() {
               </div>
             </div>
             <div className="single-btns">
-              <button onClick={LoadEditValues} className="btns btn-black">
+              <button
+                aria-label="Edit Current Invoice"
+                onClick={LoadEditValues}
+                className="btns btn-black"
+              >
                 Edit
               </button>
-              <button onClick={handleDelete} className="btns btn-red">
+              <button
+                aria-label="Delete Current Invoice"
+                onClick={handleDelete}
+                className="btns btn-red"
+              >
                 Delete
               </button>
               {invoice.status !== "paid" && (
                 <button
+                  aria-label="Mark as Paid"
                   onClick={() => markAsPaid(invoice.id)}
                   className="btns btn-purple"
                 >
@@ -168,8 +180,14 @@ function InvoiceDetail() {
             </div>
           </div>
           <div className="single-btnes">
-            <button className="btns btn-black">Edit</button>
             <button
+              aria-label="Edit Current Invoice for Mobile Screen Media"
+              className="btns btn-black"
+            >
+              Edit
+            </button>
+            <button
+              aria-label="Delete Current Invoice for Mobile Screen Media"
               onClick={handleDelete}
               style={{ margin: "0px 10px" }}
               className="btns btn-red"
@@ -178,6 +196,7 @@ function InvoiceDetail() {
             </button>
             {invoice.status !== "paid" && (
               <button
+                aria-label="Mar Invoice as paid for Mobile Screen Media"
                 onClick={() => markAsPaid(invoice.id)}
                 className="btns btn-purple"
               >
@@ -187,7 +206,7 @@ function InvoiceDetail() {
           </div>
         </>
       )}
-    </main>
+    </div>
   );
 }
 

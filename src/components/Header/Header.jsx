@@ -40,8 +40,8 @@ function Header() {
   const invoiceList = useSelector((state) => state.invoice);
 
   return (
-    <main className="header">
-      <section onClick={handleFil} className="invoiceHeader">
+    <div className="header">
+      <div onClick={handleFil} className="invoiceHeader">
         <h1 style={{ marginBottom: `${getWidth <= 600 ? "4px" : "8px"}` }}>
           Invoices
         </h1>
@@ -61,9 +61,9 @@ function Header() {
         ) : (
           <p>No Invoices</p>
         )}
-      </section>
-      <section className="invoice-events">
-        <section className="filter">
+      </div>
+      <div className="invoice-events">
+        <div className="filter">
           <button className="btn-color" onClick={handleFilter}>
             {getWidth <= 600 ? "Filter" : "Filter by status"}
             <span
@@ -72,7 +72,7 @@ function Header() {
               <img src={arrowDown} alt="Arrow Down" />
             </span>
           </button>
-          <article
+          <div
             className={`${
               headerReducer.isFilter
                 ? "filter-items show-filter"
@@ -80,16 +80,16 @@ function Header() {
             }`}
           >
             <CheckBox />
-          </article>
-        </section>
+          </div>
+        </div>
         <div onClick={handleInvoice} className="new-invoice-wrapper">
           <div className="img-wrapper">
             <AddCircle style={{ width: "32px", height: "32px" }} />
           </div>
           <h4>{getWidth <= 600 ? "New" : "New Invoice"}</h4>
         </div>
-      </section>
-    </main>
+      </div>
+    </div>
   );
 }
 

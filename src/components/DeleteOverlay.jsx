@@ -15,7 +15,7 @@ function DeleteOverlay() {
         }`}
       ></div>
       {/* Delete modal from Invoice Detail  */}
-      <section
+      <div
         className={`${
           isDeleteModal.isVisible
             ? "modalDelete showModalDelete"
@@ -33,16 +33,21 @@ function DeleteOverlay() {
               <button
                 onClick={closeDeleteModal_Delete}
                 className="btn btn-black"
+                aria-label="closes the delete modal that pops out"
               >
                 Cancel
               </button>
-              <button onClick={DeleteInvoice} className="btn btn-red">
+              <button
+                aria-aria-label="Delete Invoice of the current Id been loaded"
+                onClick={DeleteInvoice}
+                className="btn btn-red"
+              >
                 Delete
               </button>
             </div>
           </div>
         </div>
-      </section>
+      </div>
       {/* End of Delete Modal  */}
     </>
   );

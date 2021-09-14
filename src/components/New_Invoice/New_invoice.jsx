@@ -54,7 +54,7 @@ function New_invoice() {
           <GoBack showInvoice={showInvoice} />
         </div>
       )}
-      <section className="invoice-container">
+      <div className="invoice-container">
         {isEdit ? (
           <h1>
             Edit <span style={{ color: "#888EB0" }}>#</span>
@@ -78,11 +78,11 @@ function New_invoice() {
         >
           {({ errors, touched, values, handleChange, setFieldValue }) => (
             <Form id="new-Invoice" className="form-invoice">
-              <section className="bill-container ">
-                <article className=" billItems ">
+              <div className="bill-container ">
+                <div className=" billItems ">
                   <h4 className="formHeader">Bill From</h4>
-                </article>
-                <article className=" billItems ">
+                </div>
+                <div className=" billItems ">
                   <div className="input-info">
                     <div className="label-info">
                       <label
@@ -111,9 +111,9 @@ function New_invoice() {
                       name="senderAddress.street"
                     />
                   </div>
-                </article>
+                </div>
 
-                <article className=" billDetails">
+                <div className=" billDetails">
                   <div className="input-info">
                     <div className="label-info">
                       <label
@@ -199,15 +199,15 @@ function New_invoice() {
                       id="sendCon"
                     />
                   </div>
-                </article>
-              </section>
-              <section className="bill-container billTo">
-                <article className=" billItems ">
+                </div>
+              </div>
+              <div className="bill-container billTo">
+                <div className=" billItems ">
                   <h4 className="formHeader">Bill To</h4>
-                </article>
+                </div>
 
                 {/* ClientName */}
-                <article className=" billItems ">
+                <div className=" billItems ">
                   <div className="input-info">
                     <div className="label-info">
                       <label
@@ -233,10 +233,10 @@ function New_invoice() {
                       id="clientName"
                     />
                   </div>
-                </article>
+                </div>
 
                 {/* ClientEmail */}
-                <article className=" billItems ">
+                <div className=" billItems ">
                   <div className="input-info">
                     <div className="label-info">
                       <label
@@ -263,10 +263,10 @@ function New_invoice() {
                       name="clientEmail"
                     />
                   </div>
-                </article>
+                </div>
 
                 {/* ClientAddress */}
-                <article className=" billItems ">
+                <div className=" billItems ">
                   <div className="input-info">
                     <div className="label-info">
                       <label
@@ -295,9 +295,9 @@ function New_invoice() {
                       id="client-add"
                     />
                   </div>
-                </article>
+                </div>
                 {/* clientCity */}
-                <article className=" billDetails">
+                <div className=" billDetails">
                   <div className="input-info">
                     <div className="label-info">
                       <label
@@ -380,9 +380,9 @@ function New_invoice() {
                       id="Clientcountry"
                     />
                   </div>
-                </article>
+                </div>
                 {/* Date */}
-                <article className="date">
+                <div className="date">
                   <div className="input-info">
                     <div className="label-info">
                       <label
@@ -452,9 +452,9 @@ function New_invoice() {
                       <option value="30">Net 30 Day</option>
                     </Field>
                   </div>
-                </article>
+                </div>
                 {/* Services */}
-                <article className=" billItems ">
+                <div className=" billItems ">
                   <div className="input-info">
                     <div className="label-info">
                       <label
@@ -481,9 +481,9 @@ function New_invoice() {
                       }
                     />
                   </div>
-                </article>
-              </section>
-              <section className="bill-container billEvents">
+                </div>
+              </div>
+              <div className="bill-container billEvents">
                 <p>Item List</p>
                 {getWidth > 600 && (
                   <div className="itemsValueLabel">
@@ -568,6 +568,7 @@ function New_invoice() {
                               </div>
                               <button
                                 type="button"
+                                aria-aria-label="Remove Object from Items array at the current index"
                                 onClick={() => remove(index)}
                                 className="dustbin "
                               >
@@ -587,6 +588,7 @@ function New_invoice() {
                           })
                         }
                         type="button"
+                        aria-aria-label="Add new dynamic objects to existing items in array"
                         className="btn btn-add"
                       >
                         <Add className="matAdd" />
@@ -594,19 +596,19 @@ function New_invoice() {
                       </button>
 
                       {/* error fields */}
-                      <section className="errors">
+                      <div className="errors">
                         {touched.items && errors.items && (
                           <p>- An item must be added</p>
                         )}
-                      </section>
+                      </div>
                     </>
                   )}
                 </FieldArray>
-              </section>
+              </div>
             </Form>
           )}
         </Formik>
-      </section>
+      </div>
     </main>
   );
 }

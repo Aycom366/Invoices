@@ -7,7 +7,10 @@ function GoBack({ showInvoice }) {
 
   return (
     <div className="singleback">
-      <button onClick={() => dispatch(showInvoice())}>
+      <button
+        aria-label="Goes Back to Invoice List Page"
+        onClick={() => dispatch(showInvoice())}
+      >
         <span style={{ marginRight: "24px" }}>
           <img aria-label="go back arrow" src={ArrowLeft} alt="ArrowLeft" />
         </span>

@@ -16,7 +16,7 @@ function Sidebar() {
   };
 
   return (
-    <section onClick={handleFil} className="sidebar">
+    <div onClick={handleFil} className="sidebar">
       <div className="logo-container">
         <div className="logo-wrapper">
           <img src={logoSvg} alt="Invoice App" />
@@ -24,7 +24,11 @@ function Sidebar() {
       </div>
       <div className="side-img">
         <div className="btn-wrapper">
-          <button onClick={changeThemes} className="theme">
+          <button
+            aria-aria-label="Switch between Themes"
+            onClick={changeThemes}
+            className="theme"
+          >
             <ThemeIcon />
           </button>
         </div>
@@ -34,7 +38,7 @@ function Sidebar() {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 

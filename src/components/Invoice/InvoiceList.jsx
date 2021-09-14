@@ -13,9 +13,9 @@ function InvoiceList() {
 
   return (
     <main className="invoiceList">
-      <section className="invoiceList-wrapper">
+      <div className="invoiceList-wrapper">
         {invoiceList.filterInvoice.length < 1 ? (
-          <section className="imageInvoice">
+          <div className="imageInvoice">
             <img src={PersonHere} alt="Person" />
             <div className="invoice-info">
               <h2>There is nothing here</h2>
@@ -25,13 +25,13 @@ function InvoiceList() {
                 and get started
               </p>
             </div>
-          </section>
+          </div>
         ) : (
-          <section className="invoice-item-wrapper">
+          <div className="invoice-item-wrapper">
             {invoiceList.filterInvoice.map((invoice) => {
               const { id, paymentDue, clientName, total, status } = invoice;
               return (
-                <article
+                <div
                   onClick={() => {
                     dispatch(ToggleInvoice(id));
                   }}
@@ -96,12 +96,12 @@ function InvoiceList() {
                       </div>
                     </>
                   )}
-                </article>
+                </div>
               );
             })}
-          </section>
+          </div>
         )}
-      </section>
+      </div>
     </main>
   );
 }

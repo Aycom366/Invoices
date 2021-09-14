@@ -63,6 +63,7 @@ function App() {
                       dispatch(showInvoice());
                       setIsEdit(false);
                     }}
+                    aria-label="Close Invoice Side Slide"
                     type="reset"
                     form="new-Invoice"
                     className="btn single-btn"
@@ -81,6 +82,7 @@ function App() {
                         }}
                         type="button"
                         className="btn-ash btn"
+                        aria-label="Cancel Invoice Side Slide for Edit"
                       >
                         Cancel
                       </button>
@@ -101,6 +103,7 @@ function App() {
                         type="submit"
                         form="new-Invoice"
                         className="btn-ash btn"
+                        aria-label="Save as Draft Functionality Button for New Invoice"
                       >
                         Save as Draft
                       </button>
@@ -109,6 +112,7 @@ function App() {
                         type="submit"
                         form="new-Invoice"
                         className="btn-purple btn"
+                        aria-label="Save  Functionality Button For New Invoice"
                       >
                         Save &amp; Send
                       </button>
