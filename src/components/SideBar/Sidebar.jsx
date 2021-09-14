@@ -25,7 +25,7 @@ function Sidebar() {
       <div className="side-img">
         <div className="btn-wrapper">
           <button
-            aria-aria-label="Switch between Themes"
+            aria-label="Switch between Themes"
             onClick={changeThemes}
             className="theme"
           >
