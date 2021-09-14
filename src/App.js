@@ -32,8 +32,8 @@ function App() {
   const dispatch = useDispatch();
 
   return (
-    <main className="main">
-      <section className="main-app-container">
+    <div className="main">
+      <div className="main-app-container">
         <Sidebar />
         <DeleteOverlay />
 
@@ -48,7 +48,7 @@ function App() {
           >
             <Overlay />
 
-            <section
+            <div
               className={`${
                 showInvoiceFilter
                   ? "invoice-wrapper invoice-wrapper-show"
@@ -56,7 +56,7 @@ function App() {
               }`}
             >
               <New_invoice />
-              <section className={`${isEdit ? "fixed fixedEdit" : "fixed"}`}>
+              <div className={`${isEdit ? "fixed fixedEdit" : "fixed"}`}>
                 {!isEdit && (
                   <button
                     onClick={() => {
@@ -74,7 +74,7 @@ function App() {
 
                 {isEdit ? (
                   <>
-                    <section className="btn-contain">
+                    <div className="btn-contain">
                       <button
                         onClick={() => {
                           dispatch(showInvoice());
@@ -93,11 +93,11 @@ function App() {
                       >
                         Save Changes
                       </button>
-                    </section>
+                    </div>
                   </>
                 ) : (
                   <>
-                    <section className="btn-contain">
+                    <div className="btn-contain">
                       <button
                         onClick={() => setisDraft(false)}
                         type="submit"
@@ -112,16 +112,16 @@ function App() {
                         type="submit"
                         form="new-Invoice"
                         className="btn-purple btn"
-                        aria-label="Save  Functionality Button For New Invoice"
+                        aria-label="Save Functionality Button For New Invoice"
                       >
                         Save &amp; Send
                       </button>
-                    </section>
+                    </div>
                   </>
                 )}
-              </section>
-            </section>
-            <section className="invoice-changer">
+              </div>
+            </div>
+            <div className="invoice-changer">
               <div
                 className={`${
                   toggleInvoice
@@ -145,12 +145,12 @@ function App() {
               >
                 <InvoiceDetail />
               </div>
-            </section>
+            </div>
           </div>
         </div>
         {/* End of main */}
-      </section>
-    </main>
+      </div>
+    </div>
   );
 }
 

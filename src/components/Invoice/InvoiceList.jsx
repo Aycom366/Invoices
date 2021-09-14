@@ -12,7 +12,7 @@ function InvoiceList() {
   const { getWidth } = useGlobalContext();
 
   return (
-    <main className="invoiceList">
+    <div className="invoiceList">
       <div className="invoiceList-wrapper">
         {invoiceList.filterInvoice.length < 1 ? (
           <div className="imageInvoice">
@@ -102,7 +102,7 @@ function InvoiceList() {
           </div>
         )}
       </div>
-    </main>
+    </div>
   );
 }
 

@@ -568,9 +568,9 @@ function New_invoice() {
                               </div>
                               <button
                                 type="button"
-                                aria-aria-label="Remove Object from Items array at the current index"
+                                aria-label="Remove Object from Items array at the current index"
                                 onClick={() => remove(index)}
-                                className="dustbin "
+                                className="dustbin"
                               >
                                 <Delete className="dakFont" />
                               </button>
@@ -588,7 +588,7 @@ function New_invoice() {
                           })
                         }
                         type="button"
-                        aria-aria-label="Add new dynamic objects to existing items in array"
+                        aria-label="Add new dynamic objects to existing items in array"
                         className="btn btn-add"
                       >
                         <Add className="matAdd" />
