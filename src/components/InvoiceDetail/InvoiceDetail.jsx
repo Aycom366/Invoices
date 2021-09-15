@@ -183,6 +183,7 @@ function InvoiceDetail() {
             <button
               aria-label="Edit Current Invoice for Mobile Screen Media"
               className="btns btn-black"
+  onClick={LoadEditValues}
             >
               Edit
             </button>
